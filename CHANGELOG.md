@@ -1,6 +1,15 @@
+## 0.4.1
+
+### Language
+
+- Added support for semicolons. They are *optional*.
+This prevents errors from habitually adding semicolons to the end of statements
+or expressions.
+
 ## 0.4.0
 
 ### Language
+
 - Add `continue` keyword
 - Add `as`: `import "..." for Name as OtherName`
 - Add Support positive sign in scientific notation
@@ -8,6 +17,7 @@
 - Allow `.` to be on a different line (for fluent/builder APIs)
 
 ### Modules
+
 - Random: Random.sample optimizations
 - List:
   - add `list.sort()` and `list.sort {|a, b| ... }` (quicksort)
@@ -24,6 +34,7 @@
   - add `log2`
 
 ### Fixes
+
 - Fix stack corruption related to `Fn` calls
 - Fix a byte offset bug in CODE_IMPORT_VARIABLE
 - Fix some stack corruptions related to multiple wrenInterpret calls
@@ -31,6 +42,7 @@
 - Fix `Bool`, `Num` and `Null` allowing subclassing, which is invalid
 
 ### API
+
 - BREAKING: Add `userData` to `wrenReallocateFn`
 - BREAKING: Add `WrenLoadModuleResult` which has a `onComplete` callback, allowing freeing module strings
 - Add `wrenHasVariable` and `wrenHasModule` queries, for use with `wrenGetVariable`
@@ -44,6 +56,7 @@
   - wrenRemoveMapValue
 
 ### Other
+
 - build; add util/generate_docs.py for regenerating project files
 - vm; Allow computed goto when using clang on Windows
 - vm; WREN_MAX_TEMP_ROOTS default is 8 (instead of 5)
@@ -113,6 +126,7 @@ but help pave the way forward toward a consistency for modules.
 - Added `wrenAbortFiber`
 
 ### CLI
+
 Please note that beyond 0.2.0 the CLI will have it's own changelog.
 This list is not exhaustive. For a fuller history see the commit log above.
 

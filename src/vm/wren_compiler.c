@@ -59,6 +59,7 @@ typedef enum
   TOKEN_LEFT_BRACE,
   TOKEN_RIGHT_BRACE,
   TOKEN_COLON,
+  TOKEN_SEMICOLON,
   TOKEN_DOT,
   TOKEN_DOTDOT,
   TOKEN_DOTDOTDOT,
@@ -113,11 +114,11 @@ typedef enum
   TOKEN_STATIC_FIELD,
   TOKEN_NAME,
   TOKEN_NUMBER,
-  
+
   // A string literal without any interpolation, or the last section of a
   // string following the last interpolated expression.
   TOKEN_STRING,
-  
+
   // A portion of a string literal preceding an interpolated expression. This
   // string:
   //
@@ -1092,6 +1093,7 @@ static void nextToken(Parser* parser)
       case '{': makeToken(parser, TOKEN_LEFT_BRACE); return;
       case '}': makeToken(parser, TOKEN_RIGHT_BRACE); return;
       case ':': makeToken(parser, TOKEN_COLON); return;
+      case ';': makeToken(parser, TOKEN_SEMICOLON); return;
       case ',': makeToken(parser, TOKEN_COMMA); return;
       case '*': makeToken(parser, TOKEN_STAR); return;
       case '%': makeToken(parser, TOKEN_PERCENT); return;
@@ -1290,6 +1292,15 @@ static bool matchLine(Compiler* compiler)
 static void ignoreNewlines(Compiler* compiler)
 {
   matchLine(compiler);
+}
+
+static void ignoreSemicolon(Compiler *compiler)
+{
+  if (compiler->parser->current.type == TOKEN_SEMICOLON)
+  {
+    ignoreNewlines(compiler);
+    nextToken(compiler->parser);
+  }
 }
 
 // Consumes the current token. Emits an error if it is not a newline. Then
@@ -2755,6 +2766,7 @@ GrammarRule rules[] =
   /* TOKEN_LEFT_BRACE    */ PREFIX(map),
   /* TOKEN_RIGHT_BRACE   */ UNUSED,
   /* TOKEN_COLON         */ UNUSED,
+  /* TOKEN_SEMICOLON     */ UNUSED,
   /* TOKEN_DOT           */ INFIX(PREC_CALL, call),
   /* TOKEN_DOTDOT        */ INFIX_OPERATOR(PREC_RANGE, ".."),
   /* TOKEN_DOTDOTDOT     */ INFIX_OPERATOR(PREC_RANGE, "..."),
@@ -3260,6 +3272,8 @@ void statement(Compiler* compiler)
     expression(compiler);
     emitOp(compiler, CODE_POP);
   }
+
+  ignoreSemicolon(compiler);
 }
 
 // Creates a matching constructor method for an initializer with [signature]
@@ -3590,19 +3604,22 @@ static void classDefinition(Compiler* compiler, bool isForeign)
   while (!match(compiler, TOKEN_RIGHT_BRACE))
   {
     if (!method(compiler, classVariable)) break;
-    
+
     // Don't require a newline after the last definition.
     if (match(compiler, TOKEN_RIGHT_BRACE)) break;
 
     consumeLine(compiler, "Expect newline after definition in class.");
   }
-  
+
+  ignoreSemicolon(compiler);
+
   // If any attributes are present, 
   // instantiate a ClassAttributes instance for the class
   // and send it over to CODE_END_CLASS
-  bool hasAttr = classInfo.classAttributes != NULL || 
+  bool hasAttr = classInfo.classAttributes != NULL ||
                  classInfo.methodAttributes != NULL;
-  if(hasAttr) {
+  if(hasAttr)
+  {
     emitClassAttributes(compiler, &classInfo);
     loadVariable(compiler, classVariable);
     // At the moment, we don't have other uses for CODE_END_CLASS,
@@ -3715,6 +3732,8 @@ static void variableDefinition(Compiler* compiler)
     // Default initialize it to null.
     null(compiler, false);
   }
+
+  ignoreSemicolon(compiler);
 
   // Now put it in scope.
   int symbol = declareVariable(compiler, &nameToken);
