@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # So that we don't conflict with the 'CMAKE_PROJECT_VERSION' of projects
 # depending on Wren.
-set(VERSION 0.4.0)
+set(VERSION 0.4.1)
 
 # Declare the project
 project(
