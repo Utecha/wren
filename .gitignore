@@ -1,11 +1,10 @@
 # Build outputs
-/bin
-/lib
+/build
+
 # Intermediate files
 *.obj
 Debug/
 Release/
-/build
 /.sass-cache
 *.pyc
 
@@ -15,6 +14,9 @@ Release/
 
 # The baseline file is machine-specific
 /test/benchmark/baseline.txt
+
+# clangd
+.cache
 
 # VSCode project files.
 .vscode
