@@ -1,3 +1,14 @@
+# Changelog
+
+## 0.4.1
+
+### Other
+
+- Added .clang-format config file.
+- Added .clangd config file.
+- Modified .gitignore.
+- Moved to CMake for a unified cross-platform build system.
+
 ## 0.4.0
 
 ### Language

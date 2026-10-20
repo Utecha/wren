@@ -1,20 +1,12 @@
-# Build outputs
-/bin
-/lib
-# Intermediate files
-*.obj
-Debug/
-Release/
-/build
-/.sass-cache
-*.pyc
+# Build Files
+build/
 
-# I leave a temporary Wren script at the top
-# level so that I can quickly test stuff.
-/scratch.wren
+# Scratch Files
+scratch*
+*.scratch
 
-# The baseline file is machine-specific
-/test/benchmark/baseline.txt
+# Clangd
+.cache/
 
 # VSCode project files.
 .vscode
@@ -39,3 +31,6 @@ ipch/
 
 # macOS
 .DS_Store
+
+# The baseline file is machine-specific
+/test/benchmark/baseline.txt

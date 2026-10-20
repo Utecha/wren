@@ -23,7 +23,7 @@ config = args.suffix.lstrip('_d')
 is_debug = args.suffix.startswith('_d')
 
 WREN_DIR = dirname(dirname(realpath(__file__)))
-WREN_APP = join(WREN_DIR, 'bin', 'wren_test' + args.suffix)
+WREN_APP = join(WREN_DIR, 'build', '', 'wren_test' + args.suffix)
 
 WREN_APP_WITH_EXT = WREN_APP
 if platform.system() == "Windows":

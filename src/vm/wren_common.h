@@ -61,19 +61,29 @@
 // Set this to true to stress test the GC. It will perform a collection before
 // every allocation. This is useful to ensure that memory is always correctly
 // reachable.
-#define WREN_DEBUG_GC_STRESS 0
+#ifndef WREN_DEBUG_GC_STRESS
+  #define WREN_DEBUG_GC_STRESS 0
+#endif //
 
 // Set this to true to log memory operations as they occur.
-#define WREN_DEBUG_TRACE_MEMORY 0
+#ifndef WREN_DEBUG_TRACE_MEMORY
+  #define WREN_DEBUG_TRACE_MEMORY 0
+#endif // WREN_DEBUG_TRACE_MEMORY
 
 // Set this to true to log garbage collections as they occur.
-#define WREN_DEBUG_TRACE_GC 0
+#ifndef WREN_DEBUG_TRACE_GC
+  #define WREN_DEBUG_TRACE_GC 0
+#endif // WREN_DEBUG_TRACE_GC
 
 // Set this to true to print out the compiled bytecode of each function.
-#define WREN_DEBUG_DUMP_COMPILED_CODE 0
+#ifndef WREN_DEBUG_DUMP_COMPILED_CODE
+  #define WREN_DEBUG_DUMP_COMPILED_CODE 0
+#endif // WREN_DEBUG_DUMP_COMPILED_CODE
 
 // Set this to trace each instruction as it's executed.
-#define WREN_DEBUG_TRACE_INSTRUCTIONS 0
+#ifndef WREN_DEBUG_TRACE_INSTRUCTIONS
+  #define WREN_DEBUG_TRACE_INSTRUCTIONS 0
+#endif // WREN_DEBUG_TRACE_INSTRUCTIONS
 
 // The maximum number of module-level variables that may be defined at one time.
 // This limitation comes from the 16 bits used for the arguments to
